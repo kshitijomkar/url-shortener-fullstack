@@ -3,13 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "test": "jest"
-  },
+  "dev": "vite",
+  "build": "if [ -z \"$VITE_API_BASE_URL\" ]; then echo \"Error: VITE_API_BASE_URL is not set\" && exit 1; fi && vite build",
+  "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+  "preview": "vite preview",
+  "test": "jest"
+},
+  
+
   "dependencies": {
     "axios": "^1.7.2",
     "react": "^18.3.1",
