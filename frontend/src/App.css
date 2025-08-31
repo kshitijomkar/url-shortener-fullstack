@@ -199,3 +199,22 @@
   display: flex;
   justify-content: center; /* Centers the reCAPTCHA widget horizontally */
 }
+
+/* File: frontend/src/App.css (APPEND THIS) */
+
+/* Styles for the loading spinner */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Helper to position elements inside a button */
+.button-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

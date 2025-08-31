@@ -1,10 +1,10 @@
 // File: frontend/src/pages/DashboardPage.jsx
 import React, { useState, useEffect, useContext } from 'react';
-import { motion } from 'framer-motion'; // Import motion
+import { motion, AnimatePresence } from 'framer-motion';
 import AuthContext from '../context/AuthContext';
 import api from '../api/axiosConfig';
 import toast from 'react-hot-toast';
-import { FiCopy, FiTrash2, FiBarChart2 } from 'react-icons/fi';
+import { FiCopy, FiTrash2, FiBarChart2, FiLoader } from 'react-icons/fi';
 
 // Animation variants for the list container
 const listContainerVariants = {
@@ -12,7 +12,7 @@ const listContainerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1, // This creates the cascade effect
+      staggerChildren: 0.1,
     },
   },
 };
@@ -22,7 +22,6 @@ const listItemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
-
 
 function DashboardPage() {
     const { logoutAction } = useContext(AuthContext);
@@ -100,7 +99,28 @@ function DashboardPage() {
                         onChange={(e) => setLongUrl(e.target.value)}
                     />
                     <button type="submit" disabled={loading}>
-                        {loading ? 'Working...' : 'Shorten!'}
+                        {/* THIS IS THE NEW ANIMATED BUTTON CONTENT */}
+                        <AnimatePresence mode="wait" initial={false}>
+                            {loading ? (
+                                <motion.div
+                                    key="spinner"
+                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.5 }}
+                                >
+                                    <FiLoader className="spinner" size={20} />
+                                </motion.div>
+                            ) : (
+                                <motion.span
+                                    key="text"
+                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.5 }}
+                                >
+                                    Shorten!
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
                     </button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
@@ -108,7 +128,6 @@ function DashboardPage() {
 
             <div className="content-box">
                 <h3>Your Links</h3>
-                {/* Replace the div with a motion.div and apply variants */}
                 <motion.div 
                     className="url-list"
                     variants={listContainerVariants}
@@ -117,13 +136,12 @@ function DashboardPage() {
                 >
                     {urls.length > 0 ? (
                         urls.map((url) => (
-                            // Each item is also a motion.div for individual animation
                             <motion.div 
                                 key={url.id} 
                                 className="url-item"
                                 variants={listItemVariants}
-                                whileHover={{ scale: 1.02 }} // Add hover effect
-                                whileTap={{ scale: 0.98 }} // Add tap effect
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className="url-details">
                                     <p className="short-url">
