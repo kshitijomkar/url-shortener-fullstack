@@ -1,10 +1,28 @@
 // File: frontend/src/pages/DashboardPage.jsx
 import React, { useState, useEffect, useContext } from 'react';
+import { motion } from 'framer-motion'; // Import motion
 import AuthContext from '../context/AuthContext';
 import api from '../api/axiosConfig';
 import toast from 'react-hot-toast';
-// Import the icons we need
 import { FiCopy, FiTrash2, FiBarChart2 } from 'react-icons/fi';
+
+// Animation variants for the list container
+const listContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1, // This creates the cascade effect
+    },
+  },
+};
+
+// Animation variants for each list item
+const listItemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
 
 function DashboardPage() {
     const { logoutAction } = useContext(AuthContext);
@@ -71,7 +89,7 @@ function DashboardPage() {
             <header className="dashboard-header">
                 <h1>Your Dashboard</h1>
             </header>
-
+            
             <div className="content-box">
                 <h3>Create a new Short URL</h3>
                 <form onSubmit={handleSubmit} className="url-form">
@@ -90,10 +108,23 @@ function DashboardPage() {
 
             <div className="content-box">
                 <h3>Your Links</h3>
-                <div className="url-list">
+                {/* Replace the div with a motion.div and apply variants */}
+                <motion.div 
+                    className="url-list"
+                    variants={listContainerVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
                     {urls.length > 0 ? (
                         urls.map((url) => (
-                            <div key={url.id} className="url-item">
+                            // Each item is also a motion.div for individual animation
+                            <motion.div 
+                                key={url.id} 
+                                className="url-item"
+                                variants={listItemVariants}
+                                whileHover={{ scale: 1.02 }} // Add hover effect
+                                whileTap={{ scale: 0.98 }} // Add tap effect
+                            >
                                 <div className="url-details">
                                     <p className="short-url">
                                         <a href={`${api.defaults.baseURL}/${url.shortCode}`} target="_blank" rel="noopener noreferrer">
@@ -107,19 +138,21 @@ function DashboardPage() {
                                         <FiBarChart2 />
                                         <span>{url.clickCount}</span>
                                     </div>
-                                    <button onClick={() => handleCopy(url.shortCode)} className="icon-button" title="Copy link">
-                                        <FiCopy size={18} />
-                                    </button>
-                                    <button onClick={() => handleDelete(url.shortCode)} className="icon-button delete-button" title="Delete link">
-                                        <FiTrash2 size={18} />
-                                    </button>
+                                    <div className="action-buttons">
+                                        <button onClick={() => handleCopy(url.shortCode)} className="icon-button" title="Copy link">
+                                            <FiCopy size={18} />
+                                        </button>
+                                        <button onClick={() => handleDelete(url.shortCode)} className="icon-button delete-button" title="Delete link">
+                                            <FiTrash2 size={18} />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))
                     ) : (
                         <p>You haven't shortened any URLs yet.</p>
                     )}
-                </div>
+                </motion.div>
             </div>
         </div>
     );
