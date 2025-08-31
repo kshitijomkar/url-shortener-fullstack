@@ -1,0 +1,30 @@
+# File: .gitignore
+
+# IDE and OS files
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+frontend/node_modules/
+frontend/dist/
+frontend/.pnp
+frontend/.pnp.js
+
+# Backend Build Artifacts (Maven)
+backend/target/
+backend/*.jar
+backend/*.war
+
+# IMPORTANT: Ignore secret environment files
+/backend/.env
+/frontend/.env.local

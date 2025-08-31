@@ -1,0 +1,72 @@
+/* File: frontend/src/components/Navbar.css */
+.navbar {
+  background-color: var(--container-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.navbar-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* .navbar-logo { */
+  /* font-weight: 700; */
+  /* font-size: 1.5rem; */
+  /* color: var(--text-color); */
+  /* text-decoration: none; */
+/* } */
+
+/* ADD THESE NEW RULES */
+.navbar-logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove underline from the link */
+  color: var(--text-color); /* Ensure text color is inherited or set */
+}
+
+.navbar-logo-icon {
+  height: 1.8rem; /* Adjust size as needed, e.g., 1.5rem or 2rem */
+  width: auto;
+  margin-right: 0.5rem; /* Space between icon and text */
+}
+
+.navbar-logo-text {
+  font-weight: 700;
+  font-size: 1.5rem; /* Keep text size consistent */
+  color: var(--text-color);
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.nav-item {
+  color: var(--subtle-text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-item:hover, .nav-item.active {
+  color: var(--primary-color);
+}
+.nav-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+.nav-button:hover {
+  background-color: var(--primary-hover);
+}

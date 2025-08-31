@@ -1,0 +1,4 @@
+# File: .gitignore
+
+# Ignore backend environment file
+/backend/.env
