@@ -1,13 +1,12 @@
 /* File: frontend/src/App.css */
-/* This new stylesheet includes a card-based design, better spacing, and hover effects. */
 
 .main-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem 1rem; /* More vertical padding */
+  padding: 2rem 1rem;
 }
 
-/* --- Auth Forms (Login/Register - slight polish) --- */
+/* --- Auth Forms (Login/Register) --- */
 .auth-container {
   display: flex;
   justify-content: center;
@@ -17,7 +16,7 @@
 .auth-form {
   background: var(--container-bg);
   padding: 2.5rem;
-  border-radius: 12px; /* Softer corners */
+  border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
   width: 100%;
@@ -72,12 +71,11 @@
 
 /* --- Dashboard --- */
 .dashboard-header h1 {
-    font-size: 2.25rem;
+    font-size: 2rem;
 }
-
 .content-box {
   background: var(--container-bg);
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   border: 1px solid var(--border-color);
@@ -85,23 +83,19 @@
 }
 .url-form {
   display: flex;
+  flex-direction: column; /* Stack on mobile */
+  gap: 0.5rem;
 }
 .url-form input {
-  flex-grow: 1;
-  border-radius: 8px 0 0 8px;
+  width: 100%;
+  border-radius: 8px;
   padding: 1rem;
   font-size: 1rem;
   border: 1px solid var(--border-color);
-  border-right: none;
-}
-.url-form input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-  z-index: 1; /* Bring to front on focus */
 }
 .url-form button {
-  border-radius: 0 8px 8px 0;
+  width: 100%;
+  border-radius: 8px;
   padding: 1rem 1.5rem;
   font-size: 1rem;
   background-color: var(--primary-color);
@@ -123,45 +117,49 @@
   padding: 1rem 1.5rem;
   border: 1px solid var(--border-color);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Stack content on mobile */
+  align-items: flex-start;
+  gap: 1rem;
   transition: box-shadow 0.2s, transform 0.2s;
 }
-.url-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
-}
 .url-details {
-    flex-grow: 1;
-    overflow: hidden; /* Important for text truncation */
+    width: 100%;
+    overflow: hidden;
 }
 .short-url a {
   color: var(--primary-color);
   font-weight: 500;
   text-decoration: none;
   font-size: 1.1rem;
+  word-break: break-all;
 }
 .long-url {
   color: var(--subtle-text-color);
   font-size: 0.9em;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Truncate long URLs */
-  max-width: 95%; /* Adjust as needed */
+  text-overflow: ellipsis;
+  margin-top: 0.25rem;
 }
 .url-actions {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  justify-content: space-between; /* Space out actions */
+  width: 100%;
   color: var(--subtle-text-color);
-  flex-shrink: 0; /* Prevent actions from shrinking */
-  padding-left: 1rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
 }
 .clicks-info {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-weight: 500;
+}
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
 }
 .icon-button {
     background: none;
@@ -171,58 +169,31 @@
     color: var(--subtle-text-color);
     border-radius: 50%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s, color 0.2s;
-}
-.icon-button:hover {
-    background-color: #f3f4f6;
-    color: var(--text-color);
-}
-.delete-button:hover {
-    background-color: var(--error-bg);
-    color: var(--error-text);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+/* --- Larger Screen Overrides --- */
+@media (min-width: 768px) {
+  .url-form {
+    flex-direction: row; /* Side-by-side on desktop */
+  }
+  .url-form input {
+    border-radius: 8px 0 0 8px;
+  }
+  .url-form button {
+    width: auto; /* Allow button to shrink */
+    border-radius: 0 8px 8px 0;
+  }
   .url-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    flex-direction: row; /* Side-by-side on desktop */
+    align-items: center;
   }
   .url-actions {
-    width: 100%;
-    justify-content: space-between;
-    padding-left: 0;
+    width: auto;
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
   }
 }
-/* File: frontend/src/App.css (APPEND THIS) */
-
-.homepage-container {
-    width: 100%;
-}
-
-.hero-section {
-    text-align: center;
-    padding: 3rem 1rem;
-}
-
-.hero-section h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--text-color);
-}
-
-.hero-section p {
-    font-size: 1.1rem;
-    color: var(--subtle-text-color);
-    max-width: 600px;
-    margin: 0 auto 2rem auto;
-}
-/* File: frontend/src/App.css (APPEND THIS) */
-
 .recaptcha-container {
   margin-top: 1.5rem; /* Adds the gap between the form and the reCAPTCHA */
   display: flex;
