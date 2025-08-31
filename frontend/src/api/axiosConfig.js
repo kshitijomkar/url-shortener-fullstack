@@ -2,7 +2,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080',
+    // The baseURL now comes ONLY from the environment variable.
+    // If it's missing during the build, this will be undefined.
+    baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 // Request Interceptor - THIS IS THE KEY FIX
