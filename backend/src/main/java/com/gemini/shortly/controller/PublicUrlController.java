@@ -25,26 +25,29 @@ public class PublicUrlController {
 
     @PostMapping("/shorten")
     public ResponseEntity<?> shortenUrlPublic(@RequestBody ShortenUrlRequest request, HttpServletRequest httpServletRequest) {
-        // 1. Validate reCAPTCHA token
         boolean isRecaptchaValid = recaptchaService.validateRecaptcha(request.getRecaptchaToken());
         if (!isRecaptchaValid) {
             return new ResponseEntity<>("reCAPTCHA validation failed", HttpStatus.BAD_REQUEST);
         }
 
-        // 2. Get client IP address
         String ipAddress = getClientIp(httpServletRequest);
 
         try {
-            // 3. Call the anonymous shortening service
             UrlMapping urlMapping = urlShortenerService.shortenUrlAnonymously(request.getLongUrl(), ipAddress);
             return new ResponseEntity<>(urlMapping, HttpStatus.CREATED);
         } catch (RateLimitException e) {
-            // 4. Handle rate limit error
             return new ResponseEntity<>(e.getMessage(), HttpStatus.TOO_MANY_REQUESTS);
         }
     }
 
-    // Helper method to get the client IP address, considering proxies like Render
+    // --- THIS IS THE NEW METHOD ---
+    @GetMapping("/health")
+    public ResponseEntity<String> healthCheck() {
+        // Just return a simple "200 OK" response with the text "UP"
+        return ResponseEntity.ok("UP");
+    }
+    // ----------------------------
+
     private String getClientIp(HttpServletRequest request) {
         String xfHeader = request.getHeader("X-Forwarded-For");
         if (xfHeader == null || xfHeader.isEmpty() || !xfHeader.contains(",")) {
